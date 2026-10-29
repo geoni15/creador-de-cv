@@ -1,14 +1,14 @@
 {
   "name": "creador-de-cv-desktop",
   "productName": "Creador de CV",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Versión de escritorio offline del Creador de CV",
   "private": true,
   "main": "main.js",
   "scripts": {
     "sync": "node scripts/copy-app.js",
     "start": "electron .",
-    "pack": "electron-packager . \"Creador de CV\" --platform=win32 --arch=x64 --out=release --overwrite --asar --app-version=1.0.0"
+    "pack": "electron-packager . \"Creador de CV\" --platform=win32 --arch=x64 --out=release --overwrite --asar"
   },
   "devDependencies": {
     "@electron/packager": "^20.3.0",
