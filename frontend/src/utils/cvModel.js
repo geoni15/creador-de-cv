@@ -1,5 +1,12 @@
 import { DEFAULT_THEME, normalizeTheme } from "./themes.js";
 
+const textOrEmpty = (value) => (value === null || value === undefined ? "" : String(value));
+
+const normalizedEntry = (entry, fields) => {
+  const source = entry || {};
+  return Object.fromEntries(fields.map((field) => [field, textOrEmpty(source[field])]));
+};
+
 export const emptyCv = () => ({
   id: null,
   title: "",
@@ -23,27 +30,25 @@ export const toDraft = (cv = {}) => ({
   ...emptyCv(),
   ...cv,
   id: cv.id ?? null,
+  title: textOrEmpty(cv.title),
+  full_name: textOrEmpty(cv.full_name),
+  headline: textOrEmpty(cv.headline),
+  email: textOrEmpty(cv.email),
+  phone: textOrEmpty(cv.phone),
+  location: textOrEmpty(cv.location),
+  portfolio_url: textOrEmpty(cv.portfolio_url),
+  summary: textOrEmpty(cv.summary),
   photo: cv.photo || "",
   language: cv.language === "en" ? "en" : "es",
   theme: normalizeTheme(cv.theme),
-  skills: Array.isArray(cv.skills) ? cv.skills.join(", ") : cv.skills || "",
-  languages: Array.isArray(cv.languages) ? cv.languages.join(", ") : cv.languages || "",
-  experience: (Array.isArray(cv.experience) ? cv.experience : []).map((entry) => ({
-    position: "",
-    company: "",
-    start_date: "",
-    end_date: "",
-    description: "",
-    ...entry,
-  })),
-  education: (Array.isArray(cv.education) ? cv.education : []).map((entry) => ({
-    degree: "",
-    institution: "",
-    start_date: "",
-    end_date: "",
-    description: "",
-    ...entry,
-  })),
+  skills: Array.isArray(cv.skills) ? cv.skills.join(", ") : textOrEmpty(cv.skills),
+  languages: Array.isArray(cv.languages) ? cv.languages.join(", ") : textOrEmpty(cv.languages),
+  experience: (Array.isArray(cv.experience) ? cv.experience : []).map((entry) =>
+    normalizedEntry(entry, ["position", "company", "start_date", "end_date", "description"]),
+  ),
+  education: (Array.isArray(cv.education) ? cv.education : []).map((entry) =>
+    normalizedEntry(entry, ["degree", "institution", "start_date", "end_date", "description"]),
+  ),
 });
 
 export const splitList = (value) =>
