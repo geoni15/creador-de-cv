@@ -76,6 +76,8 @@ El build de demo usa `VITE_LOCAL_MODE` (ver `frontend/.env.demo`) y guarda todo 
 
 Descarga el ejecutable desde [Releases](https://github.com/geoni15/creador-de-cv/releases/latest), descomprime el ZIP y abre `Creador de CV.exe`. No requiere instalar nada ni conexión a internet: las hojas se guardan en el equipo.
 
+> Windows puede mostrar el aviso de SmartScreen por ser un ejecutable sin firma digital. Elige "Más información" y luego "Ejecutar de todas formas".
+
 Para compilarla tú mismo:
 
 ```bash
