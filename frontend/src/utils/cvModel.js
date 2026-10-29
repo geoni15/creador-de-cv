@@ -1,3 +1,5 @@
+import { DEFAULT_THEME, normalizeTheme } from "./themes.js";
+
 export const emptyCv = () => ({
   id: null,
   title: "",
@@ -10,6 +12,7 @@ export const emptyCv = () => ({
   summary: "",
   photo: "",
   language: "es",
+  theme: DEFAULT_THEME,
   skills: "",
   languages: "",
   experience: [],
@@ -22,6 +25,7 @@ export const toDraft = (cv = {}) => ({
   id: cv.id ?? null,
   photo: cv.photo || "",
   language: cv.language === "en" ? "en" : "es",
+  theme: normalizeTheme(cv.theme),
   skills: Array.isArray(cv.skills) ? cv.skills.join(", ") : cv.skills || "",
   languages: Array.isArray(cv.languages) ? cv.languages.join(", ") : cv.languages || "",
   experience: (Array.isArray(cv.experience) ? cv.experience : []).map((entry) => ({

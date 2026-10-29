@@ -1,8 +1,10 @@
 import { SHEET_LABELS } from "../i18n/sheetText.js";
 import { initialsFor, splitEntries, splitList } from "../utils/cvModel.js";
+import { themeById } from "../utils/themes.js";
 
 export default function CvSheet({ draft }) {
   const labels = SHEET_LABELS[draft.language] || SHEET_LABELS.es;
+  const theme = themeById(draft.theme);
   const contact = [draft.email, draft.phone, draft.location, draft.portfolio_url].filter(Boolean);
   const experience = splitEntries(draft.experience);
   const education = splitEntries(draft.education);
@@ -10,7 +12,14 @@ export default function CvSheet({ draft }) {
   const languages = splitList(draft.languages);
 
   return (
-    <article className="cv-sheet">
+    <article
+      className="cv-sheet"
+      style={{
+        "--cv-accent": theme.accent,
+        "--cv-accent-strong": theme.strong,
+        "--cv-secondary": theme.secondary,
+      }}
+    >
       <div className="cv-sheet-body">
         <section className="cv-sheet-intro">
           <div className="cv-sheet-identity">

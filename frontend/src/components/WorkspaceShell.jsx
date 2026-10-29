@@ -125,6 +125,15 @@ export default function WorkspaceShell({
               </button>
             </div>
           </div>
+          <a
+            className="sidebar-github"
+            href="https://github.com/geoni15"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>Código abierto</span>
+            <strong>github.com/geoni15</strong>
+          </a>
           <div className="workspace-sidebar-foot">
             <span className="status-dot" aria-hidden="true" />
             {storageLabel}

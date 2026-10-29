@@ -194,6 +194,38 @@
   color: var(--pd-on-ink);
 }
 
+.sidebar-github {
+  display: block;
+  margin: 18px 8px 0;
+  padding: 12px 10px;
+  background: var(--pd-band);
+  color: var(--pd-on-ink);
+}
+
+.sidebar-github span {
+  display: block;
+  color: var(--pd-on-ink-subtext);
+  font: 700 0.58rem var(--pd-font-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sidebar-github strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--pd-accent);
+  font: 700 0.72rem var(--pd-font-sans);
+  overflow-wrap: anywhere;
+}
+
+.sidebar-github:hover {
+  background: var(--pd-accent-hover);
+}
+
+.sidebar-github:hover strong {
+  color: var(--pd-on-ink);
+}
+
 .workspace-sidebar-foot {
   display: flex;
   align-items: center;
@@ -673,6 +705,34 @@ option {
 .cv-lang-switch button.is-active {
   background: var(--pd-accent);
   color: var(--pd-on-accent);
+}
+
+.cv-theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.cv-theme-swatch {
+  display: grid;
+  place-items: center;
+  padding: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cv-theme-swatch span {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.cv-theme-swatch:hover {
+  background: var(--pd-surface-2);
+}
+
+.cv-theme-swatch.is-active {
+  background: var(--pd-text);
 }
 
 .cv-completeness {

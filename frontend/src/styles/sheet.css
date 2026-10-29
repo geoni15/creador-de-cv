@@ -40,7 +40,7 @@
 
 .cv-sheet-position {
   margin: 0;
-  color: var(--pd-accent-hover);
+  color: var(--cv-accent-strong, var(--pd-accent-hover));
   font: 700 0.7rem/1.5 Arial, "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -48,7 +48,7 @@
 
 .cv-sheet-contact {
   margin: 14px 0 0;
-  color: var(--pd-secondary);
+  color: var(--cv-secondary, var(--pd-secondary));
   font: 0.8rem/1.7 Arial, "Helvetica Neue", Helvetica, sans-serif;
   overflow-wrap: anywhere;
 }
@@ -61,8 +61,8 @@
   height: 116px;
   flex: none;
   overflow: hidden;
-  background: var(--pd-on-ink);
-  color: var(--pd-secondary);
+  background: color-mix(in srgb, var(--cv-accent, var(--pd-accent)) 14%, #ffffff);
+  color: var(--cv-accent-strong, var(--pd-secondary));
   font: 400 1.9rem/1 var(--pd-font-sans);
   letter-spacing: 0.04em;
 }
@@ -95,12 +95,12 @@
   width: 8px;
   height: 8px;
   flex: none;
-  background: var(--pd-accent);
+  background: var(--cv-accent, var(--pd-accent));
 }
 
 .cv-sheet-section p {
   margin: 0;
-  color: var(--pd-secondary);
+  color: var(--cv-secondary, var(--pd-secondary));
   font: 0.84rem/1.68 Arial, "Helvetica Neue", Helvetica, sans-serif;
   white-space: pre-line;
 }
@@ -126,7 +126,7 @@
 }
 
 .cv-sheet-entry-head span {
-  color: var(--pd-secondary);
+  color: var(--cv-secondary, var(--pd-secondary));
   font: 700 0.62rem/1.5 Arial, "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -136,7 +136,7 @@
 .cv-sheet-entry-org {
   display: block;
   margin: 3px 0 7px;
-  color: var(--pd-accent-hover);
+  color: var(--cv-accent-strong, var(--pd-accent-hover));
   font: 700 0.66rem/1.5 Arial, "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -150,8 +150,8 @@
 
 .cv-sheet-chip {
   padding: 7px 10px;
-  background: var(--pd-on-ink);
-  color: var(--pd-ink-2);
+  background: color-mix(in srgb, var(--cv-accent, var(--pd-accent)) 16%, #ffffff);
+  color: var(--cv-accent-strong, var(--pd-ink-2));
   font: 700 0.68rem/1 Arial, "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: 0.03em;
 }

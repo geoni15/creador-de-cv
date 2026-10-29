@@ -1,3 +1,5 @@
+import { normalizeTheme } from "./themes.js";
+
 const STORE_KEY = "creador_cv_demo_cvs";
 const PHOTO_MAX_CHARS = 900000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,6 +109,7 @@ const parsePayload = (body) => {
     summary: text(body.summary, 2000),
     photo,
     language,
+    theme: normalizeTheme(body.theme),
     experience: entryList(
       body.experience,
       { position: 120, company: 150, start_date: 20, end_date: 20, description: 600 },
@@ -224,6 +227,7 @@ export async function localFetch(path, options = {}) {
         ...rest,
         id: newId,
         title: `${row.title} (copia)`.slice(0, 120),
+        theme: normalizeTheme(row.theme),
         created_at: now,
         updated_at: now,
       };

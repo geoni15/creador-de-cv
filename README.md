@@ -11,10 +11,12 @@ Creador de hojas de vida open source: varias versiones del currículum, edición
 - Varias hojas por persona, con nombre interno de versión (no se imprime).
 - Foto cuadrada con recorte automático (JPG, PNG o WebP, hasta 10 MB).
 - Secciones de perfil, experiencia, formación, habilidades e idiomas.
+- Seis temas de color para la hoja, guardados con cada versión del currículum.
 - Hoja de vida en español o inglés (los datos se escriben una sola vez).
 - Vista previa e impresión A4 con `Imprimir / PDF → Guardar como PDF`.
 - Buscador, filtros por idioma, métricas del portafolio y modo oscuro.
-- Version local: guardado en MySQL. Demo pública: guardado en el navegador.
+- App de escritorio para Windows que funciona sin conexión ni instalación.
+- Version local: guardado en MySQL. Demo pública y app de escritorio: guardado en el equipo.
 
 ## Stack
 
@@ -70,6 +72,24 @@ npm run build:demo
 
 El build de demo usa `VITE_LOCAL_MODE` (ver `frontend/.env.demo`) y guarda todo en `localStorage`, así que puede publicarse en cualquier hosting estático. Esta es la versión que corre en GitHub Pages.
 
+## App de escritorio (Windows, offline)
+
+Descarga el ejecutable desde [Releases](https://github.com/geoni15/creador-de-cv/releases/latest), descomprime el ZIP y abre `Creador de CV.exe`. No requiere instalar nada ni conexión a internet: las hojas se guardan en el equipo.
+
+Para compilarla tú mismo:
+
+```bash
+cd frontend
+npm run build:demo
+
+cd ../desktop
+npm install
+npm run sync
+npm run pack
+```
+
+El resultado queda en `desktop/release/Creador de CV-win32-x64/`. La app empaqueta el build de demo, por lo que no usa el backend ni MySQL.
+
 ## Configuración
 
 Copia `backend/.env.example` a `backend/.env` si necesitas cambiar los valores:
@@ -93,6 +113,7 @@ En el frontend, `VITE_API_URL` cambia la base de la API (por defecto `/api`) y `
 ```text
 backend/    API Express + MySQL (validación, CRUD, duplicado, resumen)
 frontend/   React + Vite (interfaz, hoja imprimible, estilos)
+desktop/    Electron (app offline para Windows)
 ```
 
 ## Licencia

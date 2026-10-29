@@ -4,6 +4,7 @@ import { getPool } from "./db.js";
 const router = Router();
 
 const LANGUAGES = new Set(["es", "en"]);
+const THEMES = new Set(["esmeralda", "oceano", "vino", "ambar", "grafito", "violeta"]);
 const PHOTO_MAX_CHARS = 900000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -78,7 +79,7 @@ const completenessOf = (row) => {
 };
 
 const LIST_COLUMNS = `id, title, full_name, headline, email, phone, location, portfolio_url, summary,
-  language, experience, education, skills, languages,
+  language, theme, experience, education, skills, languages,
   (photo IS NOT NULL AND photo <> '') AS has_photo,
   created_at, updated_at`;
 
@@ -90,6 +91,7 @@ const listRow = (row) => ({
   email: row.email,
   location: row.location,
   language: row.language,
+  theme: row.theme,
   completeness: completenessOf(row),
   created_at: row.created_at,
   updated_at: row.updated_at,
@@ -119,6 +121,9 @@ const parsePayload = (body) => {
   const language = String(body.language ?? "es").trim().toLowerCase();
   if (!LANGUAGES.has(language)) return { error: "El idioma de la hoja no es válido" };
 
+  const theme = String(body.theme ?? "esmeralda").trim().toLowerCase();
+  if (!THEMES.has(theme)) return { error: "El color de la hoja no es válido" };
+
   const portfolioUrl = text(body.portfolio_url, 255);
   if (portfolioUrl && !/^https?:\/\//i.test(portfolioUrl)) {
     return { error: "El enlace debe iniciar con http:// o https://" };
@@ -141,6 +146,7 @@ const parsePayload = (body) => {
       summary: text(body.summary, 2000),
       photo: parsedPhoto.photo,
       language,
+      theme,
       experience: entryList(
         body.experience,
         { position: 120, company: 150, start_date: 20, end_date: 20, description: 600 },
@@ -168,6 +174,7 @@ const columnValues = (data) => [
   data.summary,
   data.photo,
   data.language,
+  data.theme,
   JSON.stringify(data.experience),
   JSON.stringify(data.education),
   JSON.stringify(data.skills),
@@ -233,8 +240,8 @@ router.post("/cvs", async (req, res) => {
   if (parsed.error) return res.status(400).json({ message: parsed.error });
   const [result] = await getPool().query(
     `INSERT INTO cvs
-      (title, full_name, headline, email, phone, location, portfolio_url, summary, photo, language, experience, education, skills, languages)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (title, full_name, headline, email, phone, location, portfolio_url, summary, photo, language, theme, experience, education, skills, languages)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     columnValues(parsed.data),
   );
   res.status(201).json({ id: result.insertId });
@@ -248,7 +255,7 @@ router.put("/cvs/:id", async (req, res) => {
   const [result] = await getPool().query(
     `UPDATE cvs SET
       title = ?, full_name = ?, headline = ?, email = ?, phone = ?, location = ?,
-      portfolio_url = ?, summary = ?, photo = ?, language = ?, experience = ?,
+      portfolio_url = ?, summary = ?, photo = ?, language = ?, theme = ?, experience = ?,
       education = ?, skills = ?, languages = ?
      WHERE id = ?`,
     [...columnValues(parsed.data), id],
@@ -271,8 +278,8 @@ router.post("/cvs/:id/duplicate", async (req, res) => {
         : JSON.stringify(value);
   const [result] = await getPool().query(
     `INSERT INTO cvs
-      (title, full_name, headline, email, phone, location, portfolio_url, summary, photo, language, experience, education, skills, languages)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (title, full_name, headline, email, phone, location, portfolio_url, summary, photo, language, theme, experience, education, skills, languages)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       `${source.title} (copia)`.slice(0, 120),
       source.full_name,
@@ -284,6 +291,7 @@ router.post("/cvs/:id/duplicate", async (req, res) => {
       source.summary,
       source.photo,
       source.language,
+      source.theme,
       jsonValue(source.experience),
       jsonValue(source.education),
       jsonValue(source.skills),

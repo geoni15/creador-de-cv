@@ -13,6 +13,8 @@ import {
   toDraft,
 } from "./utils/cvModel.js";
 import { readPhotoFile } from "./utils/photo.js";
+import { CV_THEMES, DEFAULT_THEME } from "./utils/themes.js";
+import { printSheet } from "./utils/printSheet.js";
 
 const FILTER_LABELS = {
   "": "Todas las hojas",
@@ -225,6 +227,7 @@ export default function App() {
       summary: draft.summary || null,
       photo: draft.photo || null,
       language: draft.language,
+      theme: draft.theme,
       experience: splitEntries(draft.experience),
       education: splitEntries(draft.education),
       skills: splitList(draft.skills),
@@ -302,7 +305,7 @@ export default function App() {
       darkMode={darkMode}
       setDarkMode={setDarkMode}
       connection={connection}
-      storageLabel={IS_LOCAL_MODE ? "Navegador · demo" : "MySQL · creador_cv"}
+      storageLabel={IS_LOCAL_MODE ? "Este equipo" : "MySQL · creador_cv"}
       pageEyebrow="Portafolio personal"
       pageTitle="Mis hojas de vida"
       pathParts={["Portafolio personal", "ES · EN", "A4"]}
@@ -339,7 +342,7 @@ export default function App() {
         <article className="cv-stat">
           <span>Última edición</span>
           <strong className="cv-stat-date">{formatDate(summary?.lastUpdated)}</strong>
-          <small>{IS_LOCAL_MODE ? "Guardado en el navegador" : "Guardado en MySQL"}</small>
+          <small>{IS_LOCAL_MODE ? "Guardado en este equipo" : "Guardado en MySQL"}</small>
         </article>
       </div>
 
@@ -422,7 +425,7 @@ export default function App() {
                   >
                     {tab === "preview" ? "Editar ficha" : "Vista del CV"}
                   </button>
-                  <button type="button" className="secondary-button" onClick={() => window.print()}>
+                  <button type="button" className="secondary-button" onClick={printSheet}>
                     Imprimir / PDF
                   </button>
                   {draft.id && (
@@ -461,6 +464,25 @@ export default function App() {
                   >
                     EN
                   </button>
+                </div>
+                <div className="cv-theme-switch" role="group" aria-label="Color de la hoja">
+                  <span className="cv-lang-switch-label">Color</span>
+                  {CV_THEMES.map((theme) => {
+                    const active = (draft.theme || DEFAULT_THEME) === theme.id;
+                    return (
+                      <button
+                        type="button"
+                        key={theme.id}
+                        className={`cv-theme-swatch${active ? " is-active" : ""}`}
+                        aria-label={theme.label}
+                        aria-pressed={active}
+                        title={theme.label}
+                        onClick={() => updateField("theme", theme.id)}
+                      >
+                        <span style={{ background: theme.accent }} />
+                      </button>
+                    );
+                  })}
                 </div>
                 <span className="cv-completeness">
                   {isNew ? "Borrador nuevo" : `${completeness} % completa`}

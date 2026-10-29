@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS cvs (
   summary TEXT NULL,
   photo MEDIUMTEXT NULL,
   language ENUM('es', 'en') NOT NULL DEFAULT 'es',
+  theme VARCHAR(20) NOT NULL DEFAULT 'esmeralda',
   experience JSON NULL,
   education JSON NULL,
   skills JSON NULL,
@@ -66,6 +67,12 @@ export async function initDatabase() {
     queueLimit: 0,
   });
   await pool.query(SCHEMA);
+  const [themeColumns] = await pool.query("SHOW COLUMNS FROM cvs LIKE 'theme'");
+  if (!themeColumns.length) {
+    await pool.query(
+      "ALTER TABLE cvs ADD COLUMN theme VARCHAR(20) NOT NULL DEFAULT 'esmeralda' AFTER language",
+    );
+  }
   return pool;
 }
 
