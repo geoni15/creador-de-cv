@@ -15,31 +15,6 @@
   color: var(--pd-ink-2);
 }
 
-.cv-sheet-masthead {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: var(--pd-ink-2);
-  color: var(--pd-on-ink);
-  padding: 18px 32px;
-}
-
-.cv-sheet-kicker {
-  color: var(--pd-on-ink);
-  font: 700 0.6rem/1 Arial, "Helvetica Neue", Helvetica, sans-serif;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.cv-sheet-company {
-  margin-left: auto;
-  color: var(--pd-on-ink);
-  font: 700 0.62rem/1.5 Arial, "Helvetica Neue", Helvetica, sans-serif;
-  letter-spacing: 0.12em;
-  text-align: right;
-  text-transform: uppercase;
-}
-
 .cv-sheet-body {
   padding: 34px 32px 40px;
 }
@@ -181,36 +156,7 @@
   letter-spacing: 0.03em;
 }
 
-.cv-sheet-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 18px;
-  padding: 14px 32px;
-  background: var(--pd-ink-2);
-  color: var(--pd-on-ink);
-  font: 700 0.6rem/1.6 Arial, "Helvetica Neue", Helvetica, sans-serif;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cv-sheet-footer > span:last-child {
-  margin-left: auto;
-}
-
 @media (max-width: 640px) {
-  .cv-sheet-masthead {
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    padding: 16px 20px;
-  }
-
-  .cv-sheet-company {
-    margin-left: 0;
-    width: 100%;
-    text-align: left;
-  }
-
   .cv-sheet-body {
     padding: 24px 20px 28px;
   }
@@ -228,18 +174,11 @@
     height: 88px;
     font-size: 1.5rem;
   }
-
-  .cv-sheet-footer {
-    padding: 12px 20px;
-  }
-
-  .cv-sheet-footer > span:last-child {
-    margin-left: 0;
-  }
 }
 
 @page {
-  margin: 12mm;
+  size: A4;
+  margin: 0;
 }
 
 @media print {
@@ -279,9 +218,9 @@
 
   .cv-sheet {
     max-width: none;
+    padding: 12mm;
   }
 
-  .cv-sheet-masthead,
   .cv-sheet-intro,
   .cv-sheet-section,
   .cv-sheet-entry {

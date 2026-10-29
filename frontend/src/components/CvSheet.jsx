@@ -1,26 +1,16 @@
-import { SHEET_LABELS, sheetLocale } from "../i18n/sheetText.js";
+import { SHEET_LABELS } from "../i18n/sheetText.js";
 import { initialsFor, splitEntries, splitList } from "../utils/cvModel.js";
 
 export default function CvSheet({ draft }) {
   const labels = SHEET_LABELS[draft.language] || SHEET_LABELS.es;
-  const contact = [draft.email, draft.phone, draft.portfolio_url].filter(Boolean);
+  const contact = [draft.email, draft.phone, draft.location, draft.portfolio_url].filter(Boolean);
   const experience = splitEntries(draft.experience);
   const education = splitEntries(draft.education);
   const skills = splitList(draft.skills);
   const languages = splitList(draft.languages);
-  const printedOn = new Intl.DateTimeFormat(sheetLocale(draft.language), {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date());
 
   return (
     <article className="cv-sheet">
-      <header className="cv-sheet-masthead">
-        <span className="cv-sheet-kicker">{labels.kicker}</span>
-        {draft.location && <span className="cv-sheet-company">{draft.location}</span>}
-      </header>
-
       <div className="cv-sheet-body">
         <section className="cv-sheet-intro">
           <div className="cv-sheet-identity">
@@ -104,11 +94,6 @@ export default function CvSheet({ draft }) {
           </section>
         )}
       </div>
-
-      <footer className="cv-sheet-footer">
-        <span>{labels.footer}</span>
-        <span>{printedOn}</span>
-      </footer>
     </article>
   );
 }
